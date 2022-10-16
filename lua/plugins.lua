@@ -1,22 +1,32 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-  use 'nvim-lualine/lualine.nvim'
-  require('lualine').setup()
+	use 'nvim-lualine/lualine.nvim'
+	require('lualine').setup()
 
-  use 'nvim-treesitter/nvim-treesitter'
+	use {  
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate'
+	}
+	require('nvim-treesitter.configs').setup {
+		ensure_installed = { "rust", "go", "lua" },
+		auto_install = true,
+		highlight = {
+			enable = true,
+		},
+	}
 
-  use 'airblade/vim-gitgutter'
-  use 'tpope/vim-fugitive'
+	use 'airblade/vim-gitgutter'
+	use 'tpope/vim-fugitive'
 
-  use 'preservim/nerdtree'
+	use 'preservim/nerdtree'
 
-  use 'ycm-core/YouCompleteMe'
+	use 'ycm-core/YouCompleteMe'
 
-  use 'marko-cerovac/material.nvim'
-  vim.g.material_style = "darker"
-  use 'ellisonleao/gruvbox.nvim'
-  vim.cmd 'colorscheme gruvbox'
-  vim.cmd('hi Normal guibg=None')
-  vim.cmd('hi Normal ctermbg=None')
+	use 'marko-cerovac/material.nvim'
+	vim.g.material_style = "darker"
+	use 'ellisonleao/gruvbox.nvim'
+	vim.cmd 'colorscheme gruvbox'
+	vim.cmd('hi Normal guibg=None')
+	vim.cmd('hi Normal ctermbg=None')
 end)

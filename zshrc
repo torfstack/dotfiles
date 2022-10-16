@@ -30,8 +30,8 @@ export PATH=$PATH:/home/david/bin
 export PATH=$PATH:/home/david/go
 
 alias vim=nvim
-alias vimc="nvim ~/.dotfiles/init.lua"
-alias plugc="nvim ~/.dotfiles/lua/plugins.lua"
+alias vimc="nvim /home/david/.dotfiles/init.lua"
+alias plugc="nvim /home/david/.dotfiles/lua/plugins.lua"
 alias termc="nvim ~/.config/terminator/config"
 alias i3c="nvim ~/.config/i3/config"
 alias prof="nvim ~/.profile" 
