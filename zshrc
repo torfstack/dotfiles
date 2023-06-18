@@ -37,3 +37,5 @@ alias i3c="nvim ~/.config/i3/config"
 alias prof="nvim ~/.profile" 
 alias pico="nvim ~/.config/i3/picom.conf"
 alias godot="godot3-mono-bin" 
+
+source /usr/share/zsh/share/antigen.zsh
