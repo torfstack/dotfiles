@@ -1,8 +1,21 @@
-require'lspconfig'.lua_ls.setup{}
-require'lspconfig'.gopls.setup{}
-require'lspconfig'.rust_analyzer.setup{}
+require("mason").setup()
+require("mason-lspconfig").setup()
 
 local cmp = require('cmp')
+
+local lspconfig = require('lspconfig')
+lspconfig.lua_ls.setup{}
+lspconfig.gopls.setup{}
+lspconfig.rust_analyzer.setup{}
+lspconfig.helm_ls.setup{
+    settings = {
+        ['helm-ls'] = {
+            yamlls = {
+                path = "yaml-language-server",
+            }
+        }
+    }
+}
 
 cmp.setup({
     completion = {
@@ -41,3 +54,4 @@ cmp.setup({
         {name = 'nvim_lsp'},
     },
 })
+

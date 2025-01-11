@@ -17,13 +17,13 @@ return require('packer').startup(function(use)
     use 'airblade/vim-gitgutter'
     use 'tpope/vim-fugitive'
 
-    use 'preservim/nerdtree'
-
     use 'nvim-lua/popup.nvim'
     use {
         'nvim-telescope/telescope.nvim',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
+
+    use {'towolf/vim-helm'}
 
     -- LSP Support
     use {'neovim/nvim-lspconfig'}
