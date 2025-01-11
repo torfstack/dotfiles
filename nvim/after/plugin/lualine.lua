@@ -1,5 +1,7 @@
 require('lualine').setup {
     options = {
-        theme = "codedark"
+        theme = 'modus-vivendi',
+        section_separators = { left = '', right = '' },
+        component_separators = ''
     }
 }
