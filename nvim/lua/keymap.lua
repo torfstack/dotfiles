@@ -4,3 +4,11 @@ vim.keymap.set('n', 'fg', builtin.live_grep, {})
 vim.keymap.set('n', 'fb', builtin.buffers, {})
 vim.keymap.set('n', 'fh', builtin.help_tags, {})
 
+local telescope = require('telescope')
+telescope.setup {
+    pickers = {
+        find_files = {
+            hidden = true
+        },
+    },
+}

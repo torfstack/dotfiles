@@ -14,5 +14,7 @@ xinput --set-prop "Logitech USB Receiver" "libinput Accel Profile Enabled" 0, 1
 # Keyboard repetition
 xset r rate 175 28
 
-
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile flat
+
+# Environment
+export EDITOR=nvim
