@@ -2,7 +2,8 @@
 xrandr --output HDMI-0 --off
 xrandr --output DP-2 --mode 2560x1440 --pos 2560x0 --rate 144
 xrandr --output DP-4 --mode 2560x1440 --rate 144
-xset dpms 2400 3000 3000
+xset s off
+xset dpms 1200 1200 1200
 
 # Wallpaper
 feh --bg-scale /home/david/Nextcloud/Pictures/mountain.jpg
@@ -14,6 +15,7 @@ xinput --set-prop "Logitech USB Receiver" "libinput Accel Profile Enabled" 0, 1
 # Keyboard repetition
 xset r rate 175 28
 
+gsettings set org.gnome.desktop.screensaver lock-enabled false
 gsettings set org.gnome.desktop.peripherals.mouse accel-profile flat
 
 # Environment

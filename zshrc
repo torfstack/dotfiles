@@ -31,6 +31,7 @@ alias t="tmux"
 alias s="TERM=xterm-256color ssh -p 103 david@torfstack.com"
 alias f="fastfetch"
 alias v="vim ."
+alias gu="go-mod-upgrade"
 
 export CR_PAT="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"
 
@@ -54,3 +55,7 @@ export PATH=$PATH:/home/david/.cargo/bin
 
 # task runner
 eval "$(task --completion zsh)"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
