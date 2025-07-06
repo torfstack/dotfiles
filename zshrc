@@ -33,8 +33,6 @@ alias f="fastfetch"
 alias v="vim ."
 alias gu="go-mod-upgrade"
 
-export CR_PAT="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"
-
 # bun completions
 [ -s "/home/david/.bun/_bun" ] && source "/home/david/.bun/_bun"
 
