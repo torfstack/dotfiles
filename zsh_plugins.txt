@@ -1,0 +1,10 @@
+getantidote/use-omz
+
+ohmyzsh/ohmyzsh path:lib
+ohmyzsh/ohmyzsh path:plugins/extract
+
+ohmyzsh/ohmyzsh path:themes/robbyrussell.zsh-theme
+
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-history-substring-search

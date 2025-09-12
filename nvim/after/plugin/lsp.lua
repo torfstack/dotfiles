@@ -1,8 +1,6 @@
 require("mason").setup()
 require("mason-lspconfig").setup()
 
-local cmp = require('cmp')
-
 local lspconfig = require('lspconfig')
 lspconfig.lua_ls.setup{}
 lspconfig.gopls.setup{}
@@ -17,6 +15,7 @@ lspconfig.helm_ls.setup{
     }
 }
 
+local cmp = require('cmp')
 cmp.setup({
     completion = {
         autocomplete = false,
