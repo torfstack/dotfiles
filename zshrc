@@ -1,7 +1,7 @@
 autoload -Uz compinit
 compinit
 
-source ~/.antidote/antidote.zsh
+source $HOME/.antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 
 # aliases
@@ -15,14 +15,14 @@ alias v="vim ."
 alias gu="go-mod-upgrade"
 
 # linux only
-alias i3c="nvim ~/.config/i3/config"
-alias pico="nvim ~/.config/i3/picom.conf"
-alias downsync="rclone sync googledrive: /home/david/drive"
-alias upsync="rclone sync /home/david/drive googledrive:"
+alias i3c="nvim $HOME/.config/i3/config"
+alias pico="nvim $HOME/.config/i3/picom.conf"
+alias downsync="rclone sync googledrive: $HOME/drive"
+alias upsync="rclone sync $HOME/drive googledrive:"
 
-export PATH=$PATH:/home/david/bin
-export PATH=$PATH:/home/david/go/bin
-export PATH=$PATH:/home/david/.cargo/bin
+export PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/go/bin
+export PATH=$PATH:$HOME/.cargo/bin
 
 # task runner
 eval "$(task --completion zsh)"
