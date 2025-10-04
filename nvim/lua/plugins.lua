@@ -60,7 +60,6 @@ return require('packer').startup(function(use)
     }
 
     -- Color stuff
-    use 'marko-cerovac/material.nvim'
     use 'sainnhe/sonokai'
 
 end)

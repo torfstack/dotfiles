@@ -1,19 +1,7 @@
 require("mason").setup()
 require("mason-lspconfig").setup()
 
-local lspconfig = require('lspconfig')
-lspconfig.lua_ls.setup{}
-lspconfig.gopls.setup{}
-lspconfig.rust_analyzer.setup{}
-lspconfig.helm_ls.setup{
-    settings = {
-        ['helm-ls'] = {
-            yamlls = {
-                path = "yaml-language-server",
-            }
-        }
-    }
-}
+vim.lsp.enable({"lua_ls", "gopls", "rust_analyzer", "helm_ls"})
 
 local cmp = require('cmp')
 cmp.setup({
