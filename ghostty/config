@@ -1,0 +1,22 @@
+font-family = Iosevka Nerd Font Mono
+font-feature = calt liga dlig
+font-style = Medium
+font-size = 20
+
+theme = Ayu
+background = 000000
+foreground = dddddd
+cursor-color = 666666
+background-opacity = 0.95
+
+window-decoration = none
+window-padding-x = 1
+window-padding-y = 1
+window-padding-balance = true
+adjust-cell-height = 2
+window-height=5000
+window-width=5000
+
+cursor-style = block
+cursor-style-blink = false
+shell-integration-features = no-cursor

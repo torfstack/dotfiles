@@ -60,7 +60,7 @@ return require('packer').startup(function(use)
     }
 
     -- Color stuff
-    use 'sainnhe/sonokai'
+    use 'ayu-theme/ayu-vim'
 
 end)
 
