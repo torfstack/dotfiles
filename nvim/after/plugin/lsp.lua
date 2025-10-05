@@ -1,7 +1,7 @@
 require("mason").setup()
 require("mason-lspconfig").setup()
 
-vim.lsp.enable({"lua_ls", "gopls", "rust_analyzer", "helm_ls"})
+vim.lsp.enable({"lua_ls", "gopls", "rust_analyzer", "helm_ls", "vtsls", "pyright"})
 
 local cmp = require('cmp')
 cmp.setup({
