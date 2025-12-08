@@ -12,12 +12,7 @@ alias pico = nvim $"($env.HOME)/.config/i3/picom.conf"
 alias downsync = rclone sync googledrive: $"($env.HOME)/drive"
 alias upsync = rclone sync $"($env.HOME)/drive" googledrive:
 
-# --- STARSHIP ---
-mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
-
-# --- COMPLETIONS ---
-source $"($nu.cache-dir)/carapace.nu"
+# --- COMPLETIONS --- source $"($nu.cache-dir)/carapace.nu"
 
 # --- COLORS ---
 $env.config.color_config = {
@@ -29,3 +24,13 @@ $env.config.color_config = {
     shape_external: "green"
     shape_pipe: "white"
 }
+
+# --- STARSHIP ---
+mkdir ($nu.data-dir | path join "vendor/autoload")
+starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+
+# --- SDKMAN wrapper ---
+def sdk [...args] {
+    ^bash -c $"source ~/.sdkman/bin/sdkman-init.sh && sdk ($args | str join ' ')"
+}
+

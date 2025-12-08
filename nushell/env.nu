@@ -29,3 +29,12 @@ $env.SDKMAN_DIR = $"($env.HOME)/.sdkman"
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
 mkdir $"($nu.cache-dir)"
 carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
+
+# --- SDKMAN (java) ---
+$env.SDKMAN_DIR = $"($env.HOME)/.sdkman"
+let java_current = "/home/david/.sdkman/candidates/java/current"
+
+if ($java_current | path exists) {
+    $env.JAVA_HOME = $java_current
+    $env.PATH = ($env.PATH | prepend $"($java_current)/bin")
+}
