@@ -24,7 +24,10 @@ alias pico = nvim $"($env.HOME)/.config/i3/picom.conf"
 alias downsync = rclone sync googledrive: $"($env.HOME)/drive"
 alias upsync = rclone sync $"($env.HOME)/drive" googledrive:
 
-# --- CUSTOM COMMANDS ---
-def sdk [...args] {
-    ^bash -c $"source ($env.SDKMAN_DIR)/bin/sdkman-init.sh && sdk ($args | str join ' ')"
+# --- REGENERATE INTEGRATIONS
+def --env "nu-reload-integrations" [] {
+    let autoload_dir = ($nu.data-dir | path join "vendor/autoload")
+    rm -rf $autoload_dir
+    mkdir $autoload_dir
+    print "Integrations cleared. Restart Nushell to regenerate."
 }
