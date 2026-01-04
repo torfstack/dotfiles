@@ -1,18 +1,7 @@
-# --- CONFIG ---
+# --- SETTINGS ---
 $env.config.buffer_editor = "nvim"
 $env.config.show_banner = false
-
-# --- ALIAS ---
-alias vim = nvim
-alias k = k9s
-alias t = tmux
-
-alias i3c = nvim $"($env.HOME)/.config/i3/config"
-alias pico = nvim $"($env.HOME)/.config/i3/picom.conf"
-alias downsync = rclone sync googledrive: $"($env.HOME)/drive"
-alias upsync = rclone sync $"($env.HOME)/drive" googledrive:
-
-# --- COMPLETIONS --- source $"($nu.cache-dir)/carapace.nu"
+$env.config.highlight_resolved_externals = true
 
 # --- COLORS ---
 $env.config.color_config = {
@@ -21,16 +10,21 @@ $env.config.color_config = {
     shape_directory: { attr: "n" }
     shape_externalarg: { attr: "n" }
     shape_globpattern: { attr: "n" }
-    shape_external: "green"
     shape_pipe: "white"
+    shape_external: "red"
+    shape_external_resolved: "green" 
 }
 
-# --- STARSHIP ---
-mkdir ($nu.data-dir | path join "vendor/autoload")
-starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+# --- ALIASES ---
+alias vim = nvim
+alias k = k9s
+alias t = tmux
+alias i3c = nvim $"($env.HOME)/.config/i3/config"
+alias pico = nvim $"($env.HOME)/.config/i3/picom.conf"
+alias downsync = rclone sync googledrive: $"($env.HOME)/drive"
+alias upsync = rclone sync $"($env.HOME)/drive" googledrive:
 
-# --- SDKMAN wrapper ---
+# --- CUSTOM COMMANDS ---
 def sdk [...args] {
-    ^bash -c $"source ~/.sdkman/bin/sdkman-init.sh && sdk ($args | str join ' ')"
+    ^bash -c $"source ($env.SDKMAN_DIR)/bin/sdkman-init.sh && sdk ($args | str join ' ')"
 }
-
