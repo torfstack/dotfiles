@@ -2,7 +2,8 @@
 use std ["path add"]
 path add $"($env.HOME)/bin" $"($env.HOME)/go/bin" $"($env.HOME)/.cargo/bin"
 
-$env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense'
+$env.CARAPACE_BRIDGES = 'zsh,fish,bash'
+$env.EDITOR = "nvim"
 
 # --- AUTO-GENERATE INTEGRATIONS ---
 let autoload_dir = ($nu.data-dir | path join "vendor/autoload")
@@ -17,3 +18,4 @@ if not ($starship_path | path exists) { ^starship init nu | save -f $starship_pa
 if not ($carapace_path | path exists) { ^carapace _carapace nushell | save -f $carapace_path }
 if not ($mise_path     | path exists) { ^mise activate nu | save -f $mise_path }
 if not ($zoxide_path   | path exists) { ^zoxide init nushell | save -f $zoxide_path }
+

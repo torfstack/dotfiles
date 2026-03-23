@@ -1,0 +1,17 @@
+# Keyboard
+input "type:keyboard" {
+    xkb_layout "us"
+    xkb_options "caps:super,compose:ralt"
+    repeat_delay 175
+    repeat_rate 28
+}
+
+# Mouse (G502 X LS)
+# Tip: Use 'swaymsg -t get_inputs' to get the exact identifier
+input "1133:16543:Logitech_G502_X_LS" {
+    # This replaces 'libinput Accel Profile Enabled 0, 1'
+    accel_profile "flat"
+
+    # Set pointer_accel to 0 so it doesn't interfere with the matrix
+    pointer_accel -0.215
+}

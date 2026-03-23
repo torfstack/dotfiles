@@ -1,7 +1,9 @@
 require("mason").setup()
-require("mason-lspconfig").setup()
+require("mason-lspconfig").setup({
+    ensure_installed = {"lua_ls", "gopls", "rust_analyzer", "helm_ls", "vtsls", "pyright"},
+})
 
-vim.lsp.enable({"lua_ls", "gopls", "rust_analyzer", "helm_ls", "vtsls", "pyright"})
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local cmp = require('cmp')
 cmp.setup({
@@ -42,12 +44,11 @@ cmp.setup({
     },
 })
 
-local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.go",
-    callback = function()
-        require('go.format').goimports()
-    end,
-    group = format_sync_grp,
+require('go').setup({
+    lsp_cfg = false,
+    lsp_gofumpt = false,
+    lsp_on_attach = true,
+    auto_format = true,
+    auto_lint = false,
+    lsp_inlay_hints = { enable = false },
 })
-require('go').setup()

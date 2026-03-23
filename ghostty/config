@@ -1,17 +1,15 @@
-font-family = Iosevka Nerd Font Mono
+font-family = Iosevka Term Slab Nerd Font Mono
 font-feature = calt liga dlig
 font-style = Medium
-font-size = 20
+font-size = 15
 
-theme = Ayu
+theme = Ayu True
 background = 000000
 foreground = dddddd
 cursor-color = 666666
-background-opacity = 0.95
+background-opacity = 0.92
 
 window-decoration = none
-window-padding-x = 1
-window-padding-y = 1
 window-padding-balance = true
 adjust-cell-height = 2
 window-height=5000

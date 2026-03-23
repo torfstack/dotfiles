@@ -17,8 +17,10 @@ $env.config.color_config = {
 
 # --- ALIASES ---
 alias vim = nvim
+alias v = nvim .
 alias k = k9s
 alias t = tmux
+alias l = ls -la
 alias i3c = nvim $"($env.HOME)/.config/i3/config"
 alias pico = nvim $"($env.HOME)/.config/i3/picom.conf"
 alias downsync = rclone sync googledrive: $"($env.HOME)/drive"
@@ -31,3 +33,35 @@ def --env "nu-reload-integrations" [] {
     mkdir $autoload_dir
     print "Integrations cleared. Restart Nushell to regenerate."
 }
+
+# --- COMPLETION MENU ---
+$env.config.menus ++= [{
+    name: completion_menu
+    only_buffer_difference: false
+    marker: "? "
+    type: {
+        layout: columnar
+        columns: 4
+        col_width: 20
+        col_padding: 2
+    }
+    style: {
+        text: white 
+        selected_text: white_reverse
+        description_text: { fg: yellow, attr: i }
+    }
+}]
+
+# --- FISH COMPLETER ---
+let fish_completer = {|spans|
+    fish --command $"complete '--do-complete=($spans | str join ' ')'"
+    | from tsv --flexible --noheaders --no-infer
+    | rename value description
+}
+
+$env.config.completions.external = {
+    enable: true
+    max_results: 100
+    completer: $fish_completer
+}
+
