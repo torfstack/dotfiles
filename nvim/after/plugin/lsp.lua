@@ -6,7 +6,13 @@ require("mason-lspconfig").setup({
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local cmp = require('cmp')
+local luasnip = require('luasnip')
 cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
     completion = {
         autocomplete = false,
     },
@@ -41,6 +47,7 @@ cmp.setup({
     }),
     sources = {
         {name = 'nvim_lsp'},
+        {name = 'luasnip'},
     },
 })
 

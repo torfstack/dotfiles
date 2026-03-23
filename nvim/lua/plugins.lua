@@ -1,66 +1,96 @@
-vim.cmd [[packadd packer.nvim]]
+-- Bootstrap lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git", "clone", "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable",
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
 
-return require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-
-    use {
+require("lazy").setup({
+    -- Status line
+    {
         'nvim-lualine/lualine.nvim',
-        requires = { 'nvim-tree/nvim-web-devicons', opt = true }
-    }
+        lazy = false,
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
+    },
 
-    use 'ray-x/go.nvim'
-    use {
+    -- Go
+    { 'ray-x/go.nvim', lazy = false },
+
+    -- Treesitter
+    {
         'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    }
+        lazy = false,
+        build = ':TSUpdate',
+        config = function()
+            -- New nvim-treesitter rewrite: highlighting and indentation are
+            -- handled natively by neovim. setup() only accepts install_dir.
+            require('nvim-treesitter').setup()
+        end,
+    },
 
-    -- Git stuff
-    use 'airblade/vim-gitgutter'
-    use 'tpope/vim-fugitive'
+    -- Git
+    { 'airblade/vim-gitgutter', lazy = false },
+    { 'tpope/vim-fugitive', lazy = false },
 
-    use 'nvim-lua/popup.nvim'
-    use {
+    -- Fuzzy finder
+    {
         'nvim-telescope/telescope.nvim',
-        requires = { {'nvim-lua/plenary.nvim'} }
-    }
+        lazy = false,
+        dependencies = { 'nvim-lua/plenary.nvim' },
+    },
 
-    use {'towolf/vim-helm'}
+    -- Helm templates
+    { 'towolf/vim-helm', lazy = false },
 
-    -- LSP Support
-    use {'neovim/nvim-lspconfig'}
-    use {'williamboman/mason.nvim'}
-    use {'williamboman/mason-lspconfig.nvim'}
+    -- LSP
+    { 'neovim/nvim-lspconfig', lazy = false },
+    { 'williamboman/mason.nvim', lazy = false },
+    { 'williamboman/mason-lspconfig.nvim', lazy = false },
 
     -- Autocompletion
-    use {'hrsh7th/nvim-cmp'}
-    use {'hrsh7th/cmp-buffer'}
-    use {'hrsh7th/cmp-path'}
-    use {'saadparwaiz1/cmp_luasnip'}
-    use {'hrsh7th/cmp-nvim-lsp'}
-    use {'hrsh7th/cmp-nvim-lua'}
+    { 'hrsh7th/nvim-cmp', lazy = false },
+    { 'hrsh7th/cmp-buffer', lazy = false },
+    { 'hrsh7th/cmp-path', lazy = false },
+    { 'hrsh7th/cmp-nvim-lsp', lazy = false },
+    { 'hrsh7th/cmp-nvim-lua', lazy = false },
 
-    use {
+    -- Snippets (required for LSP snippet expansion)
+    {
+        'L3MON4D3/LuaSnip',
+        lazy = false,
+        build = 'make install_jsregexp',
+        dependencies = { 'saadparwaiz1/cmp_luasnip' },
+    },
+
+    -- Copilot
+    {
         "zbirenbaum/copilot.lua",
         cmd = "Copilot",
         event = "InsertEnter",
         config = function()
             require("copilot").setup({
-                panel = {
-                    enabled = false,
-                },
+                panel = { enabled = false },
                 suggestion = {
                     enabled = true,
                     auto_trigger = true,
-                    keymap = {
-                        accept = "<C-i>",
-                    },
+                    keymap = { accept = "<C-i>" },
                 },
             })
         end,
-    }
+    },
 
-    -- Color stuff
-    use 'ayu-theme/ayu-vim'
+    -- Neovim API completions and type hints in config files
+    {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        opts = {},
+    },
 
-end)
-
+    -- Colors
+    { 'ayu-theme/ayu-vim', lazy = false, priority = 1000 },
+})
