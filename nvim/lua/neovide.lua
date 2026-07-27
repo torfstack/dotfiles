@@ -1,1 +1,3 @@
-vim.cmd("set guifont=Iosevka\\ Nerd\\ Font:h14")
+if vim.g.neovide then
+    vim.o.guifont = "Iosevka Nerd Font:h14"
+end

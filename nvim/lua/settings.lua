@@ -10,3 +10,8 @@ vim.opt.clipboard = "unnamedplus"
 -- Limit Shada to 50 items, disable marks for large files
 vim.opt.shada = "!,'50,<50,s10,h"
 
+vim.filetype.add({
+    extension = {
+        gotmpl = 'gotmpl',
+    },
+})
