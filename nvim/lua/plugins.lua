@@ -65,7 +65,14 @@ require("lazy").setup({
             }
 
             treesitter.setup()
-            treesitter.install(parsers)
+
+            local installed = treesitter.get_installed('parsers')
+            local missing = vim.tbl_filter(function(parser)
+                return not vim.list_contains(installed, parser)
+            end, parsers)
+            if #missing > 0 then
+                treesitter.install(missing)
+            end
 
             vim.api.nvim_create_autocmd('FileType', {
                 pattern = {
