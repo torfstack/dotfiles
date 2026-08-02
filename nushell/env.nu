@@ -1,5 +1,6 @@
 # --- PATH & ENV ---
 use std ["path add"]
+path add "/opt/homebrew/bin"
 path add $"($env.HOME)/bin" $"($env.HOME)/go/bin" $"($env.HOME)/.cargo/bin"
 
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash'
