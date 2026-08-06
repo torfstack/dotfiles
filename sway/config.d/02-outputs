@@ -1,7 +1,7 @@
 # Main DP monitor
-output DP-3 mode 2560x1440@144Hz position 2560 0
+output DP-3 mode 2560x1440@144Hz position 0 0 adaptive_sync off allow_tearing yes max_render_time 1
 # Secondary DP monitor
-output DP-4 mode 2560x1440@144Hz position 0 0
+output DP-2 mode 2560x1440@144Hz position 2560 0 adaptive_sync off
 # Disable HDMI if not used
 output HDMI-A-1 disable
 
@@ -12,3 +12,11 @@ output * bg /home/david/drive/Pictures/mountain.jpg fill
 exec swayidle -w \
     timeout 1800 'swaymsg "output * dpms off"' \
     resume 'swaymsg "output * dpms on"'
+
+# Allow tearing for fullscreen game / Wine / Proton windows
+for_window [class="Wow.exe"] allow_tearing yes
+for_window [class="WowClassic.exe"] allow_tearing yes
+for_window [class="battle.net.exe"] allow_tearing yes
+for_window [class="steam_app_.*"] allow_tearing yes
+for_window [app_id="steam_app_.*"] allow_tearing yes
+for_window [class="Wine"] allow_tearing yes
