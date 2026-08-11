@@ -148,9 +148,10 @@ require("lazy").setup({
     {
         'neovim/nvim-lspconfig',
         lazy = false,
+        dependencies = { 'saghen/blink.cmp' },
         config = function()
             vim.lsp.config('*', {
-                capabilities = require('cmp_nvim_lsp').default_capabilities(),
+                capabilities = require('blink.cmp').get_lsp_capabilities(),
             })
         end,
     },
@@ -184,85 +185,97 @@ require("lazy").setup({
 
     -- Autocompletion
     {
-        'hrsh7th/nvim-cmp',
-        event = 'InsertEnter',
+        'saghen/blink.cmp',
+        branch = 'main', -- v2; lazy-lock.json pins the exact commit
         dependencies = {
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-nvim-lsp',
+            'saghen/blink.lib',
             'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
+            'folke/lazydev.nvim',
         },
-        config = function()
-            local cmp = require('cmp')
-            local luasnip = require('luasnip')
-
-            cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        luasnip.lsp_expand(args.body)
-                    end,
-                },
-                completion = {
-                    autocomplete = false,
-                },
-                window = {
-                    completion = cmp.config.window.bordered(),
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ['<CR>'] = cmp.mapping.confirm({ select = false }),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = 'select' }),
-                    ['<C-n>'] = cmp.mapping.select_next_item({ behavior = 'select' }),
-                    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-d>'] = cmp.mapping.scroll_docs(4),
-                    ['<Tab>'] = cmp.mapping(function(fallback)
-                        local copilot = require('copilot.suggestion')
-                        if copilot.is_visible() then
-                            copilot.accept()
-                        elseif cmp.visible() then
-                            cmp.select_next_item()
-                        else
-                            fallback()
-                        end
-                    end, { 'i', 's' }),
-                }),
-                sources = cmp.config.sources({
-                    { name = 'lazydev', group_index = 0 },
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'path' },
-                }, {
-                    { name = 'buffer' },
-                }),
-            })
+        build = function()
+            require('blink.cmp').build():pwait()
         end,
+        opts = {
+            snippets = { preset = 'luasnip' },
+            keymap = {
+                preset = 'default',
+                ['<CR>'] = { 'accept', 'fallback' },
+                ['<C-Space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+                ['<C-p>'] = { 'select_prev', 'fallback' },
+                ['<C-n>'] = { 'select_next', 'fallback' },
+                ['<C-u>'] = { 'scroll_documentation_up', 'fallback' },
+                ['<C-d>'] = { 'scroll_documentation_down', 'fallback' },
+                ['<Tab>'] = {
+                    function()
+                        local suggestion = require('copilot.suggestion')
+                        if suggestion.is_visible() then
+                            suggestion.accept()
+                            return true
+                        end
+                        return false
+                    end,
+                    'select_next',
+                    'snippet_forward',
+                    'fallback',
+                },
+            },
+            completion = {
+                -- Preserve the previous manual <C-Space> completion behavior.
+                menu = { auto_show = false },
+                documentation = { auto_show = false },
+            },
+            sources = {
+                default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+                providers = {
+                    lazydev = {
+                        name = 'LazyDev',
+                        module = 'lazydev.integrations.blink',
+                        score_offset = 100,
+                    },
+                },
+            },
+            fuzzy = { implementation = 'rust' },
+        },
     },
-    { 'hrsh7th/cmp-buffer', lazy = true },
-    { 'hrsh7th/cmp-path', lazy = true },
-    { 'hrsh7th/cmp-nvim-lsp', lazy = false },
 
     -- Snippets (required for LSP snippet expansion)
     {
         'L3MON4D3/LuaSnip',
         lazy = true,
         build = 'make install_jsregexp',
-        dependencies = { 'saadparwaiz1/cmp_luasnip' },
     },
 
     -- Copilot
     {
-        "zbirenbaum/copilot.lua",
-        cmd = "Copilot",
-        event = "InsertEnter",
+        'zbirenbaum/copilot.lua',
+        cmd = 'Copilot',
+        event = 'InsertEnter',
         config = function()
-            require("copilot").setup({
+            require('copilot').setup({
                 panel = { enabled = false },
                 suggestion = {
                     enabled = true,
                     auto_trigger = true,
+                    hide_during_completion = true,
+                    debounce = 15,
+                    trigger_on_accept = true,
+                    -- <Tab> is handled by Blink above so it can fall back to
+                    -- completion, snippet navigation, and finally a literal tab.
                     keymap = { accept = false },
                 },
+            })
+
+            vim.api.nvim_create_autocmd('User', {
+                pattern = 'BlinkCmpMenuOpen',
+                callback = function()
+                    vim.b.copilot_suggestion_hidden = true
+                end,
+            })
+            vim.api.nvim_create_autocmd('User', {
+                pattern = 'BlinkCmpMenuClose',
+                callback = function()
+                    vim.b.copilot_suggestion_hidden = false
+                end,
             })
         end,
     },
